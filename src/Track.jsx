@@ -6,7 +6,7 @@ import { ColliderBox } from "./ColliderBox";
 import { Ramp } from "./Ramp";
 import Coins from "./Coins";
 
-export function Track({ carRef }) {
+export function Track({ carRef, coinCount, setCoinCount }) {
   const result = useLoader(
     GLTFLoader,
     process.env.PUBLIC_URL + "/models/track.glb"
@@ -30,7 +30,12 @@ export function Track({ carRef }) {
       </mesh>
 
       <Ramp />
-      <Coins carRef={carRef} />
+      <Coins 
+        carRef={carRef} 
+        coinCount={coinCount} 
+        setCoinCount={setCoinCount}
+        onCoinHit={() => {}} 
+      />
 
       <ColliderBoxes />
     </>

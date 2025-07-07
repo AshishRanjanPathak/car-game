@@ -7,10 +7,12 @@ import { Suspense, useEffect, useState } from "react";
 import { Car } from "./Car";
 import { Ground } from "./Ground";
 import { Track } from "./Track";
+import { useRef } from "react";
 
-export function Scene() {
+export function Scene({ coinCount, setCoinCount }) {
   const [thirdPerson, setThirdPerson] = useState(false);
   const [cameraPosition, setCameraPosition] = useState([-6, 3.9, 6.21]);
+  const carRef = useRef();
 
   useEffect(() => {
     function keydownHandler(e) {
@@ -38,8 +40,8 @@ export function Scene() {
       )}
 
       <Ground />
-      <Track />
-      <Car thirdPerson={thirdPerson} />
+      <Track carRef={carRef} coinCount={coinCount} setCoinCount={setCoinCount} />
+      <Car ref={carRef} thirdPerson={thirdPerson} />
     </Suspense>
   );
 }

@@ -5,7 +5,7 @@ import { useSphere } from "@react-three/cannon"; // For the coin collider
 
 const debug = false;
 
-const Coins = ({ carRef, onCoinHit, setCoinCount }) => {
+const Coins = ({ carRef, onCoinHit, setCoinCount, coinCount }) => {
   const initialCoins = [
     { id: 10, position: [-0.5, 0.05, 0], visible: true, transparent: false, radius: 0.05 },
     { id: 1, position: [-1, 0.05, 0], visible: true, transparent: false, radius: 0.05 },
@@ -19,8 +19,21 @@ const Coins = ({ carRef, onCoinHit, setCoinCount }) => {
     { id: 9, position: [-5, 0.05, 0], visible: true, transparent: false, radius: 0.05 },
   ];
 
-  const [coins, setCoins] = useState(initialCoins);
+  const [coins, setCoins] = useState(() => {
+    // Reset coins when coinCount is 0 (game restart)
+    if (coinCount === 0) {
+      return initialCoins;
+    }
+    return initialCoins;
+  });
   const collisionDistance = 0.1; // Collision threshold (adjust as needed)
+
+  // Reset coins when game restarts
+  useEffect(() => {
+    if (coinCount === 0) {
+      setCoins(initialCoins);
+    }
+  }, [coinCount]);
 
   const handleHit = (coinId, api) => {
     // Disable physics on the coin by setting velocity to 0 and its mass to 0

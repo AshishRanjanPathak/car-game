@@ -1,13 +1,13 @@
 import { useBox, useRaycastVehicle } from "@react-three/cannon";
 import { useFrame, useLoader } from "@react-three/fiber";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Quaternion, Vector3, Euler } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { useControls } from "./useControls";
 import { useWheels } from "./useWheels";
 import { WheelDebug } from "./WheelDebug";
 
-export function Car({ thirdPerson }) {
+export const Car = React.forwardRef(({ thirdPerson }, ref) => {
   let result = useLoader(
     GLTFLoader,
     process.env.PUBLIC_URL + "/models/car.glb"
@@ -38,7 +38,7 @@ export function Car({ thirdPerson }) {
       wheelInfos,
       wheels,
     }),
-    useRef(null)
+    ref || useRef(null)
   );
 
   useControls(vehicleApi, chassisApi);
@@ -121,4 +121,6 @@ export function Car({ thirdPerson }) {
       <WheelDebug wheelRef={wheels[3]} radius={wheelRadius} />
     </group>
   );
-}
+});
+
+Car.displayName = 'Car';
