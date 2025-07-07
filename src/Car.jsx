@@ -38,7 +38,7 @@ export const Car = React.forwardRef(({ thirdPerson }, ref) => {
       wheelInfos,
       wheels,
     }),
-    ref || useRef(null)
+    useRef(null)
   );
 
   useControls(vehicleApi, chassisApi);
