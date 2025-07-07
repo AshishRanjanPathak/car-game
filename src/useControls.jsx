@@ -5,11 +5,15 @@ export const useControls = (vehicleApi, chassisApi) => {
 
   useEffect(() => {
     const keyDownPressHandler = (e) => {
-      setControls((controls) => ({ ...controls, [e.key.toLowerCase()]: true }));
+      if (e.key) {
+        setControls((controls) => ({ ...controls, [e.key.toLowerCase()]: true }));
+      }
     }
 
     const keyUpPressHandler = (e) => {
-      setControls((controls) => ({ ...controls, [e.key.toLowerCase()]: false }));
+      if (e.key) {
+        setControls((controls) => ({ ...controls, [e.key.toLowerCase()]: false }));
+      }
     }
   
     window.addEventListener("keydown", keyDownPressHandler);
